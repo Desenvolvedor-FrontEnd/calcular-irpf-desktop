@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calcular Imposto de Renda</title>
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <style>
+
+        html {
+            overflow: hidden;
+        }
+        
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            /* background-color: #8dbeda;     */
+            background-image: linear-gradient(to bottom, #8dbeda, #5c7b8d);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;  
+            vertical-align: middle; 
+            height: 100vh;             
+        }         
+               
+        td {            
+            border: 1px solid black;
+            width: 150px;
+        }
+
+       
+        input, button, table {
+            margin: auto;
+            display: inline
+        }
+
+        input, button {
+            margin-top: 5px;
+            margin-bottom: 5px;
+            border-radius: 5px;
+            height: 20px;
+            
+        }
+
+        button {
+            margin-bottom: 20px;
+            font-size: 1.2em;
+            height: 30px;
+            background-color: #8dbeda;
+            margin-top: 16px;        
+        }
+
+        td {
+            padding-left: 10px;
+            height: 30px;
+        }
+
+        td#vtrib, td#prev, td#ir, td#vl {
+            padding-left: 10px;
+        }
+
+        td#vl {
+            font-weight: bold;
+        }
+        
+        table {
+            margin-bottom: 15px;
+        }
+
+        section {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            background-color: #67a8cd;
+            padding-left: 5px;
+            padding-right: 5px;
+            border-radius: 10px;
+            border: 0px solid black;
+            box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.507);
+            margin: 5px;
+            margin: auto;            
+            width: 500px;
+        }
+
+        img {
+            width: 150px;            
+            margin: auto;
+            margin-top: 0px;
+        }
+
+        div#venc, div#didn {                      
+            margin: auto;
+        }
+
+        span {
+            margin-right: 5px;            
+        }
+
+        span#age {
+            margin-left: 7.5px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <section>
+        <h2 style="text-align: center;">Calcular Imposto de Renda</h2>
+
+        <div id="venc">
+            <span>Vencimentos</span> 
+            <span>👉</span> 
+            <input type="number" name="number" id="number" placeholder="R$ 0,00">
+        </div>
+
+        <div id="didn">
+            <span>Idenizações</span> 
+            <span id="age">👉</span> 
+            <input type="number" name="number" id="idn" placeholder="R$ 0,00">
+        </div>
+
+        <button onclick="calcular()">Calcular</button>
+
+        <table id="rtable">
+            <tr>
+                <td>Venc. Tributáveis</td>
+                <td id="vtrib">R$ 0,00</td>
+            </tr>
+            <tr>
+                <td>Previdência</td>
+                <td id="prev">R$ 0,00</td>
+            </tr>
+            <tr>
+                <td>Imposto de Renda</td>
+                <td id="ir">R$ 0,00</td>
+            </tr>
+            <tr>
+                <td>Valor Líquido</td>
+                <td id="vl">R$ 0,00</td>
+            </tr>
+        </table>
+    </section>
+    
+    <!-- <img src="lion.png" alt=""> -->
+
+    <script>
+        function calcular() {    
+                    
+            var VT = Number(document.getElementById("number").value);    
+            
+            var IDN = Number(document.getElementById("idn").value);  
+
+            var PREV = VT * 14/100;
+
+            var VTRIB = VT - PREV;
+            
+            if (VTRIB <= 1903.98) {
+                IR = 0
+            } else if (VTRIB <= 2826.65) {
+                IR = (VTRIB * 7.5/100) - 142.80
+            } else if (VTRIB <= 3751.05) {
+                IR = (VTRIB * 15/100) - 354.80
+            } else if (VTRIB <= 4664.68) {
+                IR = (VTRIB * 22.5/100) - 636.13
+            } else {IR = (VTRIB * 27.5/100) - 869.36}
+
+            VL = VTRIB - IR + IDN
+
+            VT = VT.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL'});
+
+            IDN = IDN.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL'});
+
+            PREV = PREV.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL'});
+
+            VTRIB = VTRIB.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL'});
+
+            IR = IR.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL'});
+
+            VL = VL.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL'});
+            
+            document.getElementById("vtrib").innerHTML=VTRIB;  
+
+            document.getElementById("prev").innerHTML=PREV; 
+
+            document.getElementById("ir").innerHTML=IR;
+
+            document.getElementById("vl").innerHTML=VL; 
+        }
+    </script>   
+     
+</body>
+</html>
